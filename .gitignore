@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+#ide file
+.idea/
+
+#sqlite
+*.sqlite3
