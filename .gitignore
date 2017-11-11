@@ -93,3 +93,6 @@ ENV/
 
 #sqlite
 *.sqlite3
+
+#notes
+notes.txt

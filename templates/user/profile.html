@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ user.username }}的设置{% endblock %}
+{% block content %}
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">个人设置</div>
+        <ul class="list-group panel-body">
+            <li class="list-group-item">基本信息</li>
+            <li class="list-group-item">修改密码</li>
+            <li class="list-group-item">消息设置</li>
+            <li class="list-group-item"><a href="/user/email/">邮箱设置</a></li>
+        </ul>
+    </div>
+</div>
+{% block settings %}{% endblock %}
+{% endblock %}

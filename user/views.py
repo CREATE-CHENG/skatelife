@@ -1,23 +1,16 @@
-from django.shortcuts import render
+from django.views.generic import ListView, TemplateView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 
-def home(request):
-    pass
+class ProfileView(TemplateView):
+    template_name = 'user/profile.html'
 
 
-def login(request):
-    pass
+class EmailView(TemplateView):
+    template_name = 'account/email.html'
 
 
-def logout(request):
-    pass
-
-
-def register(request):
-    pass
-
-
-def settings(request):
+class UserDetailView(DetailView):
     pass
