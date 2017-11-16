@@ -17,6 +17,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = '板块'
+        verbose_name_plural = verbose_name
+
 
 class Post(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='创建者')
@@ -28,6 +32,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = '帖子'
         verbose_name_plural = verbose_name
+        ordering = ['created_time']   # 回复功能增加后修改为按回复时间排序
 
     def __str__(self):
         return self.title

@@ -1,9 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 
+from .models import Post
 
-def index(request):
-    return render(request, 'forum/index.html')
+
+class IndexView(ListView):
+    paginate_by = 30
+    model = Post
+    template_name = 'forum/index.html'
+
 
 
 class PostDetailView(DetailView):
@@ -11,4 +16,6 @@ class PostDetailView(DetailView):
 
 
 class CategoryView(ListView):
-    pass
+    paginate_by = 30
+
+

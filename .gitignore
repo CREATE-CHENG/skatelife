@@ -96,3 +96,9 @@ ENV/
 
 #notes
 notes.txt
+
+#test settings
+skatelife/settings/test.py
+
+#media
+skatelife/media/*
