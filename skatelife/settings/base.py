@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django.contrib.staticfiles',
     'rest_framework',
+    'imagekit',
     'blog',
     'forum',
     'user',
@@ -123,9 +124,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 LOGIN_REDIRECT_URL = '/'
 
+LOGIN_URL = '/login/'
+
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_ADAPTER = 'user.adapter.AccountAdapter'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_LOGOUT_ON_GET = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

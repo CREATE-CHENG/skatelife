@@ -1,27 +1,76 @@
 {% extends 'base/base.html' %}
-{% block title %}{{ user.username }}的设置{% endblock %}
+{% load crispy_forms_tags %}
+{% block title %}{{ user.nickname }}的设置{% endblock %}
 {% block content %}
-<div class="col-md-4">
-    <div class="panel panel-default">
-        <div class="panel-heading">个人设置</div>
-        <ul class="list-group panel-body">
-            <li class="list-group-item">基本信息</li>
-            <li class="list-group-item">修改密码</li>
-            <li class="list-group-item">消息设置</li>
-            <li class="list-group-item"><a href="/user/email/">邮箱设置</a></li>
-        </ul>
+<div class="row">
+    <div class="col-md-3">
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-black">
+              <h3 class="widget-user-username">{{ user.nickname }}</h3>
+              <h5 class="widget-user-desc">{{ user.signature}}</h5>
+            </div>
+            <div class="widget-user-image">
+              <img class="img-circle" src="{{ user.avatar_url }}" alt="User Avatar">
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-sm-4 border-right">
+                  <div class="description-block">
+                    <h5 class="description-header">3,200</h5>
+                    <span class="description-text">SALES</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 border-right">
+                  <div class="description-block">
+                    <h5 class="description-header">13,000</h5>
+                    <span class="description-text">FOLLOWERS</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4">
+                  <div class="description-block">
+                    <h5 class="description-header">35</h5>
+                    <span class="description-text">PRODUCTS</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+              <div class="box-footer no-padding">
+              <ul class="nav nav-stacked">
+                <li><a href="{% url 'user:profile' %}">基本信息</a></li>
+                <li><a href="{% url 'account_change_password' %}">修改密码</a></li>
+                <li><a href="{% url 'account_email' %}">邮箱设置</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- /.widget-user -->
+        </div>
+    {% block form %}
+    <div class="col-md-6 center-block">
+    <div class="box box-black">
+                <div class="box-header with-border">
+              <h3 class="box-title">基本信息</h3>
+            </div>
+        <div class="box-body">
+        <div class="box-body">
+        <form action="{% url 'user:profile' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+          {{ form | crispy }}
+            <button class="btn btn-default" type="submit">更新</button>
+    </form>
+        </div>
     </div>
+    </div>
+    {% endblock %}
 </div>
-{% block form %}
-    <div class="col-md-8">
-    <div class="panel panel-default">
-        <div class="panel-heading">个人设置</div>
-        <div class="panel-body">
-        <form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update" />
-</form>
-        </div></div></div></div>
-{% endblock %}
-{% block settings %}{% endblock %}
+</div>
+{% block extra_body %}{% endblock %}
 {% endblock %}

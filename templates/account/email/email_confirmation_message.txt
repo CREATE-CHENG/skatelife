@@ -1,0 +1,2 @@
+<h2>欢迎注册skatelife帐号，请点击以下链接激活您的帐号：</h2>
+<a href="{{ activate_url }}">{{ activate_url }}</a>

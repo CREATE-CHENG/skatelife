@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}激活邮件已发送至： {{email}}.{% endblocktrans %}

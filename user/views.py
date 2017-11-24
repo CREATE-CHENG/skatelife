@@ -4,18 +4,24 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from .models import User
-
+from .forms import ProfileForm
 
 # Create your views here.
+from django.contrib.auth import get_user
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
     template_name = 'user/profile.html'
-    fields = ['nickname', 'signature', 'avatar']
+    form_class = ProfileForm
     success_url = reverse_lazy('user:profile')
 
     def get_object(self, queryset=None):
         return User.objects.get(pk=self.request.user.pk)
+
+    def form_valid(self, form):
+        if 'avatar' in form.changed_data:
+            self.request.user.avatar.delete(save=False)
+        return super().form_valid(form)
 
 
 class UserDetailView(DetailView):

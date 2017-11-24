@@ -10,7 +10,6 @@ class IndexView(ListView):
     template_name = 'forum/index.html'
 
 
-
 class PostDetailView(DetailView):
     pass
 

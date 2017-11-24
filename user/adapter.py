@@ -7,18 +7,20 @@ class AccountAdapter(DefaultAccountAdapter):
         import requests
         from skatelife.settings.test import API_KEY, API_USER
 
+        msg = self.render_mail(template_prefix, email, context)
+
         url = "http://api.sendcloud.net/apiv2/mail/send"
 
         # 您需要登录SendCloud创建API_USER，使用API_USER和API_KEY才可以进行邮件的发送。
         params = {"apiUser": API_USER,
                   "apiKey": API_KEY,
-                  "from": "test@skatelife.com",
-                  "fromName": "test@skatelife.com",
-                  "to": "createcheng@yeah.net",
-                  "subject": "skatelife激活邮件",
-                  "html": "点击以下链接激活您的帐号：\n{activate_url}".format(activate_url=context['activate_url']),
+                  "from": "admin@skatelife.com",
+                  "fromName": "admin@skatelife.com",
+                  "to": email,
+                  "subject": msg.subject,
+                  "html": msg.body,
                   }
-        r = requests.post(url, files={}, data=params)
+        requests.post(url, files={}, data=params)
 
-        print(r.text)
+
 
