@@ -1,0 +1,80 @@
+{% extends 'forum/index.html' %}
+{% load staticfiles %}
+{% block ext_head %}
+<!-- 样式文件 -->
+<link rel="stylesheet" href="{% static 'umeditor/themes/default/css/umeditor.css' %}">
+<!-- 引入 etpl -->
+<script type="text/javascript" src="{% static 'umeditor/third-party/template.min.js' %}"></script>
+<!-- 配置文件 -->
+<script type="text/javascript" src="{% static 'umeditor/umeditor.config.js' %}"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="{% static 'umeditor/umeditor.js' %}"></script>
+<!-- 语言包文件 -->
+<script type="text/javascript" src="{% static 'umeditor/lang/zh-cn/zh-cn.js' %}"></script>
+<!-- 实例化编辑器代码 -->
+<script type="text/javascript">
+    $(function(){
+        window.um = UM.getEditor('editor', {
+        	/* 传入配置参数,可配参数列表看umeditor.config.js */
+
+        });
+    });
+</script>
+{% endblock %}
+{% block content %}
+<div class="col-md-8">
+          <!-- Box Comment -->
+          <div class="box box-widget">
+            <div class="box-header with-border">
+              <div class="user-block">
+                <img class="img-circle" src="{{ post.creator.avatar_url }}" alt="User Image">
+                <span class="username"><a href="#">{{ post.creator }}</a></span>
+                <span class="description">{{ post.created_time }}</span>
+              </div>
+              <!-- /.user-block -->
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+                  <i class="fa fa-circle-o"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <p>{{ post.content }}</p>
+              <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
+              <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
+              <span class="pull-right text-muted">127 likes - 3 comments</span>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer box-comments">
+              {% for comment in post.comments_set.all %}
+              <div class="box-comment">
+                <!-- User image -->
+                <img class="img-circle img-sm" src="{{ post.creator.avatar_url }}" alt="User Image">
+
+                <div class="comment-text">
+                      <span class="username">
+                        {{ comment.creator.nickname }}
+                        <span class="text-muted pull-right">{{ comment.submit_time }}</span>
+                      </span><!-- /.username -->
+                  {{ comment.content }}
+                </div>
+                <!-- /.comment-text -->
+              </div>
+              <!-- /.box-comment -->
+              {% endfor %}
+            </div>
+            <!-- /.box-footer -->
+            <div class="box-footer">
+              <form action="#" method="post">
+               <div><script id="editor" name="content" type="text/plain" style="width:600px;height:200px;"></script></div>
+              </form>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- /.box -->
+        </div>
+{% endblock %}

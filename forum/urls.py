@@ -1,8 +1,9 @@
-from django.urls import path
+from django.conf.urls import url
 from .views import *
 
+app_name = 'forum'
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
-    path('post/<int:id>/', PostDetailView.as_view(), name='detail'),
-    path('category/<slug:slug>/', CategoryView.as_view(), name='category')
+    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^post/(?P<pk>[0-9]+)/$', PostDetailView.as_view(), name='detail'),
+    url(r'^category/(?P<slug>[\w-]+)/$', CategoryView.as_view(), name='category')
 ]

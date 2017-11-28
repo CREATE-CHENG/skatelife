@@ -11,7 +11,8 @@ class IndexView(ListView):
 
 
 class PostDetailView(DetailView):
-    pass
+    model = Post
+    template_name = 'forum/post_detail.html'
 
 
 class CategoryView(ListView):
