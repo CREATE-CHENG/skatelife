@@ -4,7 +4,6 @@ from allauth.account.adapter import DefaultAccountAdapter
 class AccountAdapter(DefaultAccountAdapter):
 
     def send_mail(self, template_prefix, email, context):
-        import requests
         from skatelife.settings.test import API_KEY, API_USER
 
         msg = self.render_mail(template_prefix, email, context)
@@ -20,7 +19,7 @@ class AccountAdapter(DefaultAccountAdapter):
                   "subject": msg.subject,
                   "html": msg.body,
                   }
-        requests.post(url, files={}, data=params)
 
-
+        from .tasks import send_email
+        send_email.delay(url, params)
 
