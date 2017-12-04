@@ -11,6 +11,7 @@ from .forms import PostCreateForm
 from comments.forms import CommentForm
 from comments.models import Comments
 from . import handlers
+from comments import handlers
 
 
 class IndexView(ListView):
