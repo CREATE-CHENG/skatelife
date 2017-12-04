@@ -1,6 +1,7 @@
 from django.views.generic import DetailView, ListView, CreateView
 from django.views.generic.edit import ModelFormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from braces.views import UserFormKwargsMixin
 from django.http import HttpResponseForbidden
@@ -8,6 +9,7 @@ from django.http import HttpResponseForbidden
 from .models import Post
 from .forms import PostCreateForm
 from comments.forms import CommentForm
+from comments.models import Comments
 from . import handlers
 
 
@@ -39,7 +41,12 @@ class PostDetailView(ModelFormMixin, DetailView):
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseForbidden()
+        self.object = self.get_object()
         form = self.get_form()
+        reply_to = form.data.copy()
+        if reply_to['reply_to']:
+            reply_to['reply_to'] = get_object_or_404(Comments, pk=reply_to['reply_to'])
+            form.data = reply_to
         if form.is_valid():
             return self.form_valid(form)
         else:

@@ -42,7 +42,7 @@
                     <span class="text-muted pull-right">{{ comment.submit_time }}</span>
                     <div class="box-body">{{ comment.content|safe }}</div>
                     {% if user != comment.creator %}
-                    <a  href="#cke_id_content" onclick="reply_to('{{ comment.creator.get_absolute_url }}', '{{ comment.creator.nickname }}')"  class="text-muted pull-right">回复</a>
+                    <a  href="#cke_id_content" onclick="reply_to('{{ comment.creator.get_absolute_url }}', '{{ comment.creator.nickname }}', '{{ comment.pk }}')"  class="text-muted pull-right">回复</a>
                     {% endif %}
                   </div>
                 </li>
@@ -79,7 +79,8 @@
           <!-- /.box -->
         </div>
 <script>
-function reply_to(url, name) {
+function reply_to(url, name, at) {
+    $("#id_reply_to").val(at)
     if({% if user.is_authenticated %}1{% else %}0{% endif %}){
       CKEDITOR.instances.id_content.focus()
       CKEDITOR.instances.id_content.insertHtml("@<a href=" + url + ">" + name + "</a>");
