@@ -1,6 +1,6 @@
 from django import template
 from user.models import User
-from forum.models import Category
+from forum.models import Category, Post
 
 register = template.Library()
 
@@ -18,4 +18,14 @@ def user_count():
 @register.simple_tag
 def get_categories():
     return Category.objects.all()
+
+
+@register.simple_tag
+def post_count():
+    return Post.objects.count()
+
+
+@register.simple_tag
+def get_notifications_info(user):
+        return user.notifications.unread()
 

@@ -1,5 +1,4 @@
 from django.db import models
-from django_comments.abstracts import CommentAbstractModel
 
 from user.models import User
 
@@ -42,3 +41,8 @@ class Post(models.Model):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('forum:detail', args=(self.pk,))
+
+    def latest_time(self):
+        if self.comments.count():
+            return self.comments.latest().submit_time
+        return self.created_time

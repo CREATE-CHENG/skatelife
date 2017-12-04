@@ -1,26 +1,7 @@
 {% extends 'forum/index.html' %}
+{% load crispy_forms_tags %}
 {% load staticfiles %}
-{% block ext_head %}
-<!-- 样式文件 -->
-<link rel="stylesheet" href="{% static 'umeditor/themes/default/css/umeditor.css' %}">
-<!-- 引入 etpl -->
-<script type="text/javascript" src="{% static 'umeditor/third-party/template.min.js' %}"></script>
-<!-- 配置文件 -->
-<script type="text/javascript" src="{% static 'umeditor/umeditor.config.js' %}"></script>
-<!-- 编辑器源码文件 -->
-<script type="text/javascript" src="{% static 'umeditor/umeditor.js' %}"></script>
-<!-- 语言包文件 -->
-<script type="text/javascript" src="{% static 'umeditor/lang/zh-cn/zh-cn.js' %}"></script>
-<!-- 实例化编辑器代码 -->
-<script type="text/javascript">
-    $(function(){
-        window.um = UM.getEditor('editor', {
-        	/* 传入配置参数,可配参数列表看umeditor.config.js */
-
-        });
-    });
-</script>
-{% endblock %}
+{% block title %}{{ post.title}}{%endblock %}
 {% block content %}
 <div class="col-md-8">
           <!-- Box Comment -->
@@ -28,7 +9,7 @@
             <div class="box-header with-border">
               <div class="user-block">
                 <img class="img-circle" src="{{ post.creator.avatar_url }}" alt="User Image">
-                <span class="username"><a href="#">{{ post.creator }}</a></span>
+                <span class="username"><a href="{{ post.creator.get_absolute_url }}">{{ post.creator }}</a></span>
                 <span class="description">{{ post.created_time }}</span>
               </div>
               <!-- /.user-block -->
@@ -43,38 +24,72 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <p>{{ post.content }}</p>
+                <p>{{ post.content|safe }}</p>
               <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
               <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
-              <span class="pull-right text-muted">127 likes - 3 comments</span>
+              <span class="pull-right text-muted">127 likes - {{ post.comments.count}} 回复</span>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer box-comments">
-              {% for comment in post.comments_set.all %}
-              <div class="box-comment">
-                <!-- User image -->
-                <img class="img-circle img-sm" src="{{ post.creator.avatar_url }}" alt="User Image">
-
-                <div class="comment-text">
-                      <span class="username">
-                        {{ comment.creator.nickname }}
-                        <span class="text-muted pull-right">{{ comment.submit_time }}</span>
-                      </span><!-- /.username -->
-                  {{ comment.content }}
-                </div>
-                <!-- /.comment-text -->
+            <div class="box-body">
+              <ul class="products-list product-list-in-box">
+                {% for comment in post.comments.all %}
+                <li class="item">
+                  <div class="product-img">
+                    <img src="{{ comment.creator.avatar_url }}" alt="Product Image">
+                  </div>
+                  <div class="product-info">
+                    <a href="{{ comment.creator.get_absolute_url }}" class="username">{{ comment.creator.nickname }}</a>
+                    <span class="text-muted pull-right">{{ comment.submit_time }}</span>
+                    <div class="box-body">{{ comment.content|safe }}</div>
+                    {% if user != comment.creator %}
+                    <a  href="#cke_id_content" onclick="reply_to('{{ comment.creator.get_absolute_url }}', '{{ comment.creator.nickname }}')"  class="text-muted pull-right">回复</a>
+                    {% endif %}
+                  </div>
+                </li>
+                {% endfor %}
+                <!-- /.item -->
+              </ul>
+            </div>
+          </div>
+        <div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title">发表回复</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
               </div>
-              <!-- /.box-comment -->
-              {% endfor %}
             </div>
-            <!-- /.box-footer -->
-            <div class="box-footer">
-              <form action="#" method="post">
-               <div><script id="editor" name="content" type="text/plain" style="width:600px;height:200px;"></script></div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              {% if user.is_authenticated %}
+              <form action="{% url 'forum:detail' post.pk %}" method="post">
+                {% csrf_token %}
+              {{ form.media }}
+              {{ form|crispy }}
+                <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
               </form>
+              {% else %}
+              <a href="{% url 'account_login' %}">登录</a>后参与回复
+              {% endif %}
             </div>
-            <!-- /.box-footer -->
+            <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </div>
+<script>
+function reply_to(url, name) {
+    if({% if user.is_authenticated %}1{% else %}0{% endif %}){
+      CKEDITOR.instances.id_content.focus()
+      CKEDITOR.instances.id_content.insertHtml("@<a href=" + url + ">" + name + "</a>");
+    }
+    else
+    {
+    alert("登录后才能回复!");
+    }
+
+
+}
+</script>
 {% endblock %}

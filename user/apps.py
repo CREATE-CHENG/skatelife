@@ -11,9 +11,6 @@ class UserConfig(AppConfig):
         user_signed_up.connect(update_joined)
         user_logged_in.connect(update_last_login)
 
-        from .tasks import test
-        test.delay()
-
 
 
 

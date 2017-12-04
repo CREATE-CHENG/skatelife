@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-md-9">
+<div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title">发布新帖</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form" action="{% url 'forum:post_create' %}" method="post">
+              {% csrf_token %}
+              <div class="box-body">
+                <div class="form-group">
+                    {{ form.media }}
+                  {{ form|crispy }}
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+</div>
+{% endblock %}

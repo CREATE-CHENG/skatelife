@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load forum_tags %}
+{% load bootstrap_pagination %}
 {% block content %}
       <!-- Small boxes (Stat box) -->
         <div class="col-md-8">
@@ -10,7 +11,6 @@
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
             </div>
             <!-- /.box-header -->
@@ -22,8 +22,8 @@
                     <img src="{{ post.creator.avatar_url }}" alt="Product Image">
                   </div>
                   <div class="product-info">
-                    <a href="{{ post.creator.get_absolute_url }}" class="product-title">{{ post.creator }}
-                      <span class="label label-warning pull-right">$1800</span></a>
+                    <a href="{{ post.creator.get_absolute_url }}" class="product-title">{{ post.creator }}</a>
+                    <span class="text-muted pull-right">{{ post.latest_time }}</span>
                         <span class="product-description">
                           <a class="" href="{{ post.get_absolute_url }}">{{ post.title }}</a> <span class="label bg-gray color-palette">{{ post.category }}</span>
                         </span>
@@ -35,13 +35,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-              <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">«</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">»</a></li>
-              </ul>
+              {% bootstrap_paginate page_obj range=10 %}
             </div>
           </div>
         </div>
@@ -59,8 +53,6 @@
 
                   <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
                     </button>
                   </div>
                 </div>
@@ -87,9 +79,9 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>{% post_count %}</sup></h3>
 
-              <p>Bounce Rate</p>
+              <p>帖子总计</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
