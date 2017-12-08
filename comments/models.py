@@ -8,7 +8,7 @@ from forum.models import Post
 
 
 class Comments(models.Model):
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='comments')
     post = models.ForeignKey(Post, verbose_name='帖子', on_delete=models.SET_NULL, null=True, related_name='comments')
     content = models.TextField(verbose_name='评论内容')
     submit_time = models.DateTimeField(auto_now_add=True, verbose_name='回复时间')

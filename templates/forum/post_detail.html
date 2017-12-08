@@ -1,7 +1,10 @@
 {% extends 'forum/index.html' %}
 {% load crispy_forms_tags %}
 {% load staticfiles %}
-{% block title %}{{ post.title}}{%endblock %}
+{% block title %}{{ post.title }}{%endblock %}
+{% block navigate %}
+/ {{ post.title }}
+{% endblock %}
 {% block content %}
 <div class="col-md-8">
           <!-- Box Comment -->
@@ -35,7 +38,7 @@
                 {% for comment in post.comments.all %}
                 <li class="item">
                   <div class="product-img">
-                    <img src="{{ comment.creator.avatar_url }}" alt="Product Image">
+                    <img src="{{ comment.creator.avatar_url }}" alt="Product Image" class="img-circle">
                   </div>
                   <div class="product-info">
                     <a href="{{ comment.creator.get_absolute_url }}" class="username">{{ comment.creator.nickname }}</a>
@@ -67,7 +70,7 @@
               {{ form.media }}
               {{ form|crispy }}
                 <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">回复</button>
               </div>
               </form>
               {% else %}

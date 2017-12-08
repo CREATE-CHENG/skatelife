@@ -6,7 +6,7 @@ from django.urls import reverse
 from braces.views import UserFormKwargsMixin
 from django.http import HttpResponseForbidden
 
-from .models import Post
+from .models import Post, Category
 from .forms import PostCreateForm
 from comments.forms import CommentForm
 from comments.models import Comments
@@ -15,7 +15,7 @@ from comments import handlers
 
 
 class IndexView(ListView):
-    paginate_by = 10
+    paginate_by = 25
     model = Post
     template_name = 'forum/index.html'
 
@@ -60,7 +60,20 @@ class PostCreateView(LoginRequiredMixin, UserFormKwargsMixin, CreateView):
 
 
 class CategoryView(ListView):
-    paginate_by = 30
+    paginate_by = 10
+    template_name = 'forum/index.html'
+    context_object_name = 'post_list'
+
+    def get_queryset(self):
+        queryset = Category.objects.get(slug=self.kwargs['slug']).posts.all()
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['slug'] = Category.objects.get(slug=self.kwargs['slug']).name
+        return context
+
+
 
 
 

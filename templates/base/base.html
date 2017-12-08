@@ -125,14 +125,15 @@
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
+                    <a href="{{ user.get_absolute_url }}">主页</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
                     <a href="#">关注</a>
                   </div>
                   <div class="col-xs-4 text-center">
                     <a href="#">帖子</a>
                   </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">文章</a>
-                  </div>
+
                 </div>
                 <!-- /.row -->
               </li>
@@ -188,7 +189,7 @@
         <li class="header">版块</li>
         {% get_categories as categories %}
         {% for category in categories %}
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>{{ category.name }}</span></a></li>
+        <li><a href="{{ category.get_absolute_url }}"><i class="fa fa-circle-o text-red"></i> <span>{{ category.name }}</span></a></li>
         {% endfor %}
         <li class="header">功能</li>
         <li class="treeview">
@@ -225,7 +226,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1><a href="/">SkateLife</a></h1>
+      <h1><a href="/">SkateLife</a>{% block navigate %}{% endblock %}</h1>
     </section>
 
     <!-- Main content -->

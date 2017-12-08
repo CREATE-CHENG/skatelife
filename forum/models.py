@@ -24,7 +24,7 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='创建者', null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='创建者', null=True, related_name='posts')
     title = models.CharField(max_length=128, verbose_name='帖子标题')
     content = models.TextField(verbose_name='帖子内容')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间 ')
@@ -33,7 +33,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = '帖子'
         verbose_name_plural = verbose_name
-        ordering = ['created_time']   # 回复功能增加后修改为按回复时间排序
+        ordering = ['-created_time']   # 回复功能增加后修改为按回复时间排序
 
     def __str__(self):
         return self.title
