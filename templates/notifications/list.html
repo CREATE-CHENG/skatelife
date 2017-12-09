@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div class="col-md-9">
+<ul class="notifications">
+  {% for notice in notifications %}
+    {% include 'notifications/notice.html' %}
+  {% endfor %}
+</ul>
+</div>
+{% endblock %}
