@@ -1,25 +1,28 @@
-<div class="alert alert-block alert-{{ notice.level }}">
-  <a class="close pull-right" href="{% url 'notifications:mark_as_read' notice.slug %}">
-    <i class="icon-close"></i>
-  </a>
-  
-  <h4>
-    <i class="icon-mail{% if notice.unread %}-alt{% endif %}"></i>
-    {{ notice.actor }}
-    {% if notice.target %}
-      在 {{ notice.target }}
-    {% endif %}
-    {{ notice.verb }}
 
-  </h4>
-  
-  <p>{{ notice.timesince }} ago</p>
-  
-  <p>{{ notice.description|linebreaksbr }}</p>
-  
-  <div class="notice-actions">
-    {% for action in notice.data.actions %}
-      <a class="btn" href="{{ action.href }}">{{ action.title }}</a>
-    {% endfor %}
+<div class="box box-widget">
+  <div class="box-header with-border">
+    <div class="user-block">
+      <img class="img-circle" src="{{ notice.actor.avatar_url }}" alt="User Image">
+      <span class="username"><a href="{{ notice.actor.get_absolute_url }}">{{ notice.actor }}</a>
+        {% if notice.target %}在 <a href="{{ notice.target.get_absolute_url }}">{{ notice.target }}</a>{% endif %}{{ notice.verb }}</span>
+      <span class="description">{{ notice.timesince }} 前</span>
+    </div>
+    <!-- /.user-block -->
+    <div class="box-tools">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <p>{{ notice.description|safe }}</p>
+    <span class="pull-right text-muted">
+      {% if notice.unread %}
+      <button type="button" class="btn btn-default btn-xs">标为已读</button>
+      {% else %}
+      <button type="button" class="btn btn-default btn-xs disabled">标为已读</button>
+      {% endif %}
+      <button type="button" class="btn btn-default btn-xs">删除</button>
+    </span>
   </div>
 </div>

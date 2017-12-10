@@ -25,7 +25,3 @@ def post_count():
     return Post.objects.count()
 
 
-@register.simple_tag
-def get_notifications_info(user):
-        return user.notifications.unread()
-
