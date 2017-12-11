@@ -15,14 +15,14 @@
     </div>
   </div>
   <div class="box-body">
-    <p>{{ notice.description|safe }}</p>
+    <p>{{ notice.description|safe|truncatechars_html:50 }}</p>
     <span class="pull-right text-muted">
       {% if notice.unread %}
-      <button type="button" class="btn btn-default btn-xs">标为已读</button>
+      <a href="{%  url 'notifications:mark_as_read' notice.slug %}" class="btn btn-default btn-xs">标为已读</a>
       {% else %}
-      <button type="button" class="btn btn-default btn-xs disabled">标为已读</button>
+      <a class="btn btn-default btn-xs disabled">标为已读</a>
       {% endif %}
-      <button type="button" class="btn btn-default btn-xs">删除</button>
+      <a href="{% url 'notifications:delete' notice.slug %}" class="btn btn-default btn-xs">删除</a>
     </span>
   </div>
 </div>

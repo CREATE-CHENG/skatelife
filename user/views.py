@@ -6,8 +6,7 @@ from django.urls import reverse_lazy
 from .models import User
 from .forms import ProfileForm
 
-# Create your views here.
-from django.contrib.auth import get_user
+# Create your views here
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):

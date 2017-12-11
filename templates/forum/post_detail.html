@@ -86,7 +86,7 @@ function reply_to(url, name, at) {
     $("#id_reply_to").val(at)
     if({% if user.is_authenticated %}1{% else %}0{% endif %}){
       CKEDITOR.instances.id_content.focus()
-      CKEDITOR.instances.id_content.insertHtml("@<a href=" + url + ">" + name + "</a>");
+      CKEDITOR.instances.id_content.insertHtml("@<a href=" + url + ">" + name + "</a> ");
     }
     else
     {
