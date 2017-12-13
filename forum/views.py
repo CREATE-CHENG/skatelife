@@ -60,7 +60,7 @@ class PostCreateView(LoginRequiredMixin, UserFormKwargsMixin, CreateView):
 
 
 class CategoryView(ListView):
-    paginate_by = 10
+    paginate_by = 25
     template_name = 'forum/index.html'
     context_object_name = 'post_list'
 

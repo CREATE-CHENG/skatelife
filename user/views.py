@@ -30,3 +30,7 @@ class UserDetailView(DetailView):
     template_name = 'user/detail.html'
     context_object_name = 'user_detail'
 
+
+class AllUserView(TemplateView):
+    template_name = 'user/all_users.html'
+

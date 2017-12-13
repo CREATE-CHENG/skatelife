@@ -35,94 +35,45 @@
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true">帖子</a></li>
-              <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">回复</a></li>
+              <li class=""><a href="#comment" data-toggle="tab" aria-expanded="false">回复</a></li>
               <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">#</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="activity">
-                <ul class="products-list product-list-in-box">
+              <table class="table table-hover">
+                <tbody><tr>
+                  <th>标题</th>
+                  <th>版块</th>
+                  <th>发表日期</th>
+                  <th>回复</th>
+                </tr>
                 {% for post in user_detail.posts.all %}
-                <li class="item">
-                  <div class="product-info">
-                        <span class="product-description">
-                        {{ post.title }}
-                        </span>
-                  </div>
-                </li>
+                <tr>
+                  <td><a href="{{ post.get_absolute_url }}"><span>{{ post.title }}</span></a></td>
+                  <td><a href="{{ post.category.get_absolute_url }}"><span>{{ post.category }}</span></a></td>
+                  <td>{{ post.created_time }}</td>
+                  <td>{{ post.comments.count }}</td>
+                </tr>
                 {% endfor %}
-              </ul>
+              </tbody></table>
+            </div>
 
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="timeline">
-                <ul class="products-list product-list-in-box">
+            <div class="tab-pane" id="comment">
+                <table class="table table-hover">
+                <tbody><tr>
+                  <th>回复内容</th>
+                  <th>回复帖子</th>
+                  <th>回复日期</th>
+                </tr>
                 {% for comment in user_detail.comments.all %}
-                <li class="item">
-                  <div class="product-info">
-                        <span class="product-description">
-                        {{ comment.content }}
-                        </span>
-                  </div>
-                </li>
+                <tr>
+                  <td>{{ comment.content|safe }}</td>
+                  <td><a href="{{ comment.post.get_absolute_url }}"><span>{{ comment.post }}</span></a></td>
+                  <td>{{ comment.submit_time }}</td>
+                </tr>
                 {% endfor %}
-              </ul>
+              </tbody></table>
               </div>
-              <!-- /.tab-pane -->
-
-              <div class="tab-pane" id="settings">
-                <form class="form-horizontal">
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputName" placeholder="Name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" placeholder="Name">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
-                    <div class="col-sm-10">
-                      <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">Submit</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
           </div>

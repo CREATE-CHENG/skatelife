@@ -36,7 +36,7 @@ skatelife
                     <a href="{{ post.creator.get_absolute_url }}" class="product-description">{{ post.creator }}</a>
 
                         <span class="product-description">
-                          <a class="" href="{{ post.get_absolute_url }}">{{ post.title }}</a> <span class="label bg-gray color-palette">{{ post.category }}</span>
+                          <a class="" href="{{ post.get_absolute_url }}">{{ post.title }}</a> <a href="{{ post.category.get_absolute_url }}"><span class="label bg-gray color-palette">{{ post.category }}</span></a>
                         </span>
                   </div>
                 </li>

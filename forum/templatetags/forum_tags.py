@@ -25,3 +25,6 @@ def post_count():
     return Post.objects.count()
 
 
+@register.simple_tag
+def all_users():
+    return User.objects.all()
