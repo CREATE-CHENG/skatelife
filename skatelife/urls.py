@@ -25,7 +25,7 @@ urlpatterns = [
     url('', include('forum.urls')),
     url('', include('allauth.urls')),
     url('^user/', include('user.urls')),
-    url('^blog/', include('blog.urls')),
+    # url('^blog/', include('blog.urls')),
     url('^notifications/', include(notifications.urls, namespace='notifications')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
