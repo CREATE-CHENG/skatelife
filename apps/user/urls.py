@@ -1,9 +1,9 @@
-from django.conf.urls import url
+from django.urls import path
 from .views import *
 
 app_name = 'user'
 urlpatterns = [
-    url(r'^profile/$', ProfileView.as_view(), name='profile'),
-    url(r'(?P<pk>[0-9]+)/$', UserDetailView.as_view(), name='detail'),
-    url(r'all/$', AllUserView.as_view(), name='detail'),
+    path('profile/', ProfileView.as_view(), name='profile'),
+    path('<int:pk>/', UserDetailView.as_view(), name='detail'),
+    path('all/', AllUserView.as_view(), name='all'),
 ]

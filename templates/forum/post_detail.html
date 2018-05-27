@@ -28,9 +28,9 @@
             <!-- /.box-header -->
             <div class="box-body">
                 <p>{{ post.content|safe }}</p>
-              <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
-              <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
-              <span class="pull-right text-muted">127 likes - {{ post.comments.count}} 回复</span>
+              <!--<button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>-->
+              <!--<button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>-->
+              <span class="pull-right text-muted">{{ post.comments.count}} 回复</span>
             </div>
             <!-- /.box-body -->
             <div class="box-body">

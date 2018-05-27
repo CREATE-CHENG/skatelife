@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from braces.views import UserFormKwargsMixin
 from django.http import HttpResponseForbidden
-
 from .models import Post, Category
 from .forms import PostCreateForm
 from comments.forms import CommentForm
@@ -18,6 +17,9 @@ class IndexView(ListView):
     paginate_by = 25
     model = Post
     template_name = 'forum/index.html'
+
+    def get_queryset(self):
+        return Post.order()
 
 
 class PostDetailView(ModelFormMixin, DetailView):
@@ -65,14 +67,13 @@ class CategoryView(ListView):
     context_object_name = 'post_list'
 
     def get_queryset(self):
-        queryset = Category.objects.get(slug=self.kwargs['slug']).posts.all()
+        queryset = Post.order().filter(category__slug=self.kwargs['slug']).all()
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['slug'] = Category.objects.get(slug=self.kwargs['slug']).name
         return context
-
 
 
 

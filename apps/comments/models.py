@@ -11,12 +11,13 @@ class Comments(models.Model):
     post = models.ForeignKey(Post, verbose_name='帖子', on_delete=models.SET_NULL, null=True, related_name='comments')
     content = models.TextField(verbose_name='评论内容')
     submit_time = models.DateTimeField(auto_now_add=True, verbose_name='回复时间')
-    reply_to = models.ForeignKey('self', blank=True, null=True, verbose_name='@', on_delete=models.SET_NULL)
+    reply_to = models.ForeignKey('self', blank=True, null=True, verbose_name='@', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = '回复'
         verbose_name_plural = verbose_name
         get_latest_by = "submit_time"
+        ordering = ['submit_time']
 
     def __str__(self):
         if self.reply_to:
