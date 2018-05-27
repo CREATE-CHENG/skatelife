@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -50,7 +51,6 @@ INSTALLED_APPS = [
     'imagekit',
     'notifications',
     'bootstrap_pagination',
-    'blog',
     'forum',
     'user',
     'comments',
@@ -169,9 +169,9 @@ CKEDITOR_IMAGE_BACKEND = 'pillow'
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'width':'100%',
-        'height':'200px',
-        'image_previewText':' ',
+        'width': '100%',
+        'height': '200px',
+        'image_previewText': ' ',
         'tabSpaces': 4,
         'toolbar': 'Custom',
         'toolbar_Custom': [
