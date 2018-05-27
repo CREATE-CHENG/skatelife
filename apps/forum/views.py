@@ -3,6 +3,7 @@ from django.views.generic.edit import ModelFormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.db.models import Q
 from braces.views import UserFormKwargsMixin
 from django.http import HttpResponseForbidden
 from .models import Post, Category
@@ -75,6 +76,15 @@ class CategoryView(ListView):
         context['slug'] = Category.objects.get(slug=self.kwargs['slug']).name
         return context
 
+
+class SearchView(ListView):
+    paginate_by = 25
+    template_name = 'forum/index.html'
+    content_type = 'post_list'
+
+    def get_queryset(self):
+        query_set = Post.order().filter(title__icontains=self.request.GET['q'])
+        return query_set
 
 
 
