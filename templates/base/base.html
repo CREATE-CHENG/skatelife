@@ -130,21 +130,7 @@
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="{{ user.get_absolute_url }}">主页</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">关注</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">帖子</a>
-                  </div>
 
-                </div>
-                <!-- /.row -->
-              </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
@@ -243,6 +229,8 @@
       {% block content %}
       {% endblock %}
       {%block stat %}
+      {% endblock %}
+      {%block script %}
       {% endblock %}
       </div>
     </section>

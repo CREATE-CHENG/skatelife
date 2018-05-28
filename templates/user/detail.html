@@ -20,11 +20,14 @@
                   <b>回复</b> <span class="pull-right">{{ user_detail.comments.count }}</span>
                 </li>
                 <li class="list-group-item">
-                  <b>关注</b> <span class="pull-right">#</span>
+                  <b>关注</b> <span class="pull-right">{{ user_detail.follows.count }}</span>
                 </li>
               </ul>
-
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+              {% if check_follow == 'followed' %}
+              <button class="btn btn-default btn-block" id="un_follow">已关注/取消关注</button>
+              {% else %}
+              <button class="btn btn-default btn-block" id="follow">关注</button>
+              {% endif %}
             </div>
             <!-- /.box-body -->
           </div>
@@ -36,7 +39,7 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true">帖子</a></li>
               <li class=""><a href="#comment" data-toggle="tab" aria-expanded="false">回复</a></li>
-              <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">#</a></li>
+              <li class=""><a href="#follows" data-toggle="tab" aria-expanded="false">关注</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="activity">
@@ -58,7 +61,23 @@
               </tbody></table>
             </div>
 
-            <div class="tab-pane" id="comment">
+              <div class="tab-pane" id="follows">
+                <table class="table table-hover">
+                <tbody><tr>
+                  <th>用户</th>
+                  <th>加入时间</th>
+                </tr>
+                {% for user in user_detail.follows.all %}
+                <tr>
+                  <td><a href="{{ user.get_absolute_url }}"><span>{{ user.nickname }}</span></a></td>
+                  <td>{{ user.joined_time }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+              </div>
+
+              <div class="tab-pane" id="comment">
                 <table class="table table-hover">
                 <tbody><tr>
                   <th>回复内容</th>
@@ -80,4 +99,55 @@
           <!-- /.nav-tabs-custom -->
         </div>
         <!-- /.col -->
+{% endblock %}
+{% block script %}
+<script>
+    $(function () {
+        $('#follow').click(function () {
+            if({% if user.is_authenticated %}1{% else %}0{% endif %}){
+                $.ajax({
+                'url': '/user/follow/{{ user_detail.pk }}/',
+                'type':'get',
+                'dataType':'json',
+                }).done(function(data){
+                          if(data.res==0){
+                            alert('已经关注过该用户了！')
+                          }
+                          else if(data.res==1){
+                              alert('关注成功！')
+                              window.location.reload()
+                          }
+                        }
+                  )
+            }
+            else{
+                alert('登陆后才能关注！')
+            }
+        })
+
+
+        $('#un_follow').click(function () {
+            if({% if user.is_authenticated %}1{% else %}0{% endif %}){
+                $.ajax({
+                'url': '/user/un_follow/{{ user_detail.pk }}/',
+                'type':'get',
+                'dataType':'json',
+                }).done(function(data){
+                          if(data.res==1){
+                            alert('取消关注成功！')
+                            window.location.reload()
+                          }
+                          else{
+                            window.location.reload()
+                          }
+                        }
+                  )
+            }
+            else{
+                alert('未登录！')
+            }
+        })
+
+    })
+</script>
 {% endblock %}

@@ -60,6 +60,23 @@ skatelife
 {% endblock %}
 {% block stat %}
 <div class="col-md-2">
+  <div class="box box-default box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">发帖</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <a href="{% url 'forum:post_create' %}" class="text-black">发布新帖</a>
+            </div>
+            <!-- /.box-body -->
+          </div>
+
         <div class="">
               <!-- USERS LIST -->
               <div class="box box-danger">

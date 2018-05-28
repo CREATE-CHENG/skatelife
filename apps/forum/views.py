@@ -3,7 +3,6 @@ from django.views.generic.edit import ModelFormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.db.models import Q
 from braces.views import UserFormKwargsMixin
 from django.http import HttpResponseForbidden
 from .models import Post, Category
