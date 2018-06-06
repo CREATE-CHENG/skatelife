@@ -1,6 +1,6 @@
 from .base import *
 
-SECRET_KEY = 'dev'
+SECRET_KEY = 'dev_secret_key'
 
 LOGGING = {
     'version': 1,

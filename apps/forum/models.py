@@ -25,7 +25,7 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='创建者', null=True, related_name='posts')
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='创建者', null=True, related_name='posts')
     title = models.CharField(max_length=128, verbose_name='帖子标题')
     content = models.TextField(verbose_name='帖子内容')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
